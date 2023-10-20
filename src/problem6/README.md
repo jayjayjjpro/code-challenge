@@ -23,7 +23,6 @@ The Market Module is a core component of our dApp, enabling the creation, storag
 - [License](#license)
 
 ## Prerequisites
-## Prerequisites
 
 Before you get started with the Market Module, ensure you have the following software tools installed:
 
@@ -65,7 +64,10 @@ VS Code is recommended for both Cosmos SDK and CosmJS.
 
 ## Quickstart
 
-1. Setting up the environment
+1.  Clone the repository
+```shell
+git clone https://github.com/Switcheo/code-challenge.git
+```
 2. Initializing the Market Module
 3. First steps: Creating and retrieving a market
 
