@@ -23,6 +23,45 @@ The Market Module is a core component of our dApp, enabling the creation, storag
 - [License](#license)
 
 ## Prerequisites
+## Prerequisites
+
+Before you get started with the Market Module, ensure you have the following software tools installed:
+
+### Docker
+
+Docker is instrumental for our exercises and deployments.
+
+- **Installation:** Head to the [Install Docker Engine](https://www.docker.com/get-started) page.
+- **Learning:** If Docker is unfamiliar, consider this [quick introduction](https://docs.docker.com/get-started/overview/).
+
+### Go
+
+Go is vital for developing with the Cosmos SDK.
+
+- **Installation:** Visit the [Go download and install](https://golang.org/doc/install) page. The latest version is recommended.
+
+### Node.js
+
+Node.js is necessary for development with CosmJS.
+
+- **Installation:** Install from the [Node.js download](https://nodejs.org/en/download/) page. Opt for the latest version.
+
+### Rust
+
+Some components are built with Rust.
+
+- **Installation:** Follow the guide on the [Rust Install](https://www.rust-lang.org/learn/get-started) page.
+- **Version Check:** Use `rustc --version`.
+- **Update:** If you've installed Rust before, update with `rustup update`.
+- **Test Installation:** Verify with `cargo version`.
+
+### Visual Studio Code
+
+VS Code is recommended for both Cosmos SDK and CosmJS.
+
+- **Installation:** Get it from the [Visual Studio Code install](https://code.visualstudio.com/download) page. Choose the version suitable for your operating system.
+
+> **Note:** For organizational clarity, create a dedicated project folder for all your Cosmos exercises.
 
 ## Quickstart
 
