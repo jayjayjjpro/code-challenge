@@ -14,9 +14,9 @@ The Market Module is a core component of our dApp, enabling the creation, storag
 
 - [Prerequisites](#prerequisites)
 - [Quickstart](#quickstart)
+- [Command Summary](#command-summary)
 - [Architecture](#architecture)
 - [Data Structures](#data-structures)
-- [Endpoints & Functions](#endpoints--functions)
 - [Testing](#testing)
 - [Areas of Improvement](#areas-of-improvement)
 - [Contribute](#contribute)
@@ -68,10 +68,43 @@ VS Code is recommended for both Cosmos SDK and CosmJS.
 ```shell
 git clone https://github.com/Switcheo/code-challenge.git
 ```
-2. Initializing the Market Module
-3. First steps: Creating and retrieving a market
+2. Before working with the Market Module, ensure your environment is properly set up. If you're new to Cosmos SDK, you might want to refer to the [official documentation](https://cosmos.network/) for guidance.
+3. Initializing the Market Module
+```shell
+<your-binary-name> init <your-node-name> --chain-id=<your-chain-id>
+```
+4. Configuration: Ensure the configuration is set correctly for your network. Edit the ~/.<your-binary-name>/config/config.toml and ~/.<your-binary-name>/config/app.toml files if needed.
+5. Refer to the [Command Summary](#command-summary) to create a market
+6. Further Exploration: Dive deeper into the module's functionality by referring to the comprehensive Module Documentation.
 
-(Provide detailed steps or link to an installation guide)
+
+### Command Summary
+#### Query Commands
+
+| Action        | Command                                     | Short Description                                            |
+|---------------|--------------------------------------------|--------------------------------------------------------------|
+| Show Market ✅  | `<your-binary-name> query market market [name]` | Retrieve details of a specific market using its name        |
+| List Markets ✅  | `<your-binary-name> query market markets`      | List all markets                                             |
+| Get Trading Fees (To be Implemented🚧)      | `<your-binary-name> query market get-trading-fees`  |  Retrieve Trading Fees |
+| Fee Tiers by Market ID (To be Implemented🚧) | `<your-binary-name> query market fee-tiers-market-id` | Retrieve Fee Tiers by Market ID |
+| Fee Tiers by Market Type (To be Implemented🚧) | `<your-binary-name> query market fee-tiers-market-type` | Retrieve Fee Tiers by Market Type |
+| Stake Equivalence All (To be Implemented🚧)  | `<your-binary-name> query market stake-equivalence-all` | Retrieve Stake Equivalence ) |
+| Fee Structure All  (To be Implemented🚧)    | `<your-binary-name> query market fee-structure-all`  | Retrieve for Fee Structure ) |
+
+#### Transaction Commands
+
+| Action       | Format                                                                                       | Short Description   |
+|--------------|----------------------------------------------------------------------------------------------|----------------------|
+| Create Market ✅| `<your-binary-name> tx market create-market [market-type] [base] [quote] [base-usd-price] [quote-usd-price] [index-oracle-id] [expiry-time]`| Creates a new market|
+| Update Market (To be Implemented🚧)               | `<your-binary-name> tx market update-market [args]`                     | Updates a market                            |
+| Set Perpetuals Funding Interval (To be Implemented🚧)  | `<your-binary-name> tx market set-perpetuals-funding-interval [args]`  | Set Perpetuals Funding Interval |
+| Add Fee Tier (To be Implemented🚧)                  | `<your-binary-name> tx market add-fee-tier [args]`                      | Adds a fee tier                             |
+| Remove Fee Tier (To be Implemented🚧)                | `<your-binary-name> tx market remove-fee-tier [args]`                   | Removes a fee tier                          |
+| Update Fee Tier (To be Implemented🚧)               | `<your-binary-name> tx market update-fee-tier [args]`                   | Updates a fee tier                          |
+| Set Stake Equivalence (To be Implemented🚧)          | `<your-binary-name> tx market set-stake-equivalence [args]`             | Set Stake Equivalence     |
+| Update All Pool Trading Fees (To be Implemented🚧)   | `<your-binary-name> tx market update-all-pool-trading-fees [args]`      | Updates all pool trading fees               |
+
+> **Note**: Please replace `<your-binary-name>` with the actual binary name of your application.
 
 ## Architecture
 
@@ -82,20 +115,37 @@ Describe the high-level architecture of the Market Module, its place within the 
 
 ## Data Structures
 
-Detailed explanations of the main data structures used in this module. For instance:
+### Market
 
-- `Market`: Represents a financial market. Attributes include...
-  - `ID`: Unique identifier for the market.
-  - `Name`: Name of the market.
-  - ... (other fields as defined in `~/types/genesis_market.go`)
-
-## Endpoints & Functions
-
-Provide documentation on the main functions and endpoints of the module:
-
-- `createMarket()`: Description and usage details.
-- `getMarketByID()`: Description and usage details.
-- ... (and so on for other main functions)
+| Field                        | Type              | Example Value                                 | Description                       |
+|------------------------------|-------------------|-----------------------------------------------|-----------------------------------|
+| Name                         | string            | `"swth_eth"`                                  | Name of the market                |
+| DisplayName                  | string            | `"SWTH_ETH"`                                  | Display name of the market        |
+| Description                  | string            | `"SWTH/ETH spot market"`                      | Description of the market         |
+| MarketType                   | string            | `"spot"`                                      | Type of the market                |
+| Base                         | string            | `"swth"`                                      | Base currency                     |
+| Quote                        | string            | `"eth"`                                       | Quote currency                    |
+| BasePrecision                | int               | `8`                                           | Precision of the base currency    |
+| QuotePrecision               | int               | `18`                                          | Precision of the quote currency   |
+| LotSize                      | sdk.Int           | `10000000000` (represents 100 SWTH)           | Lot size for the market           |
+| TickSize                     | sdk.Dec           | `1000` (represents 0.0000001)                 | Tick size for the market          |
+| MinQuantity                  | sdk.Int           | `20000000000` (represents 200 SWTH)           | Minimum quantity for trading      |
+| RiskStepSize                 | sdk.Int           | `0`                                           | Risk step size                    |
+| InitialMarginBase            | sdk.Dec           | `1` (represents 1x)                           | Initial margin base               |
+| InitialMarginStep            | sdk.Dec           | `0`                                           | Initial margin step               |
+| MaintenanceMarginRatio       | sdk.Dec           | `0`                                           | Maintenance margin ratio          |
+| MaxLiquidationOrderTicket    | sdk.Int           | `0`                                           | Max liquidation order ticket      |
+| MaxLiquidationOrderDuration  | int               | `0`                                           | Max liquidation order duration    |
+| ImpactSize                   | sdk.Int           | `0`                                           | Impact size                       |
+| MarkPriceBand                | int               | `0`                                           | Mark price band                   |
+| LastPriceProtectedBand       | int               | `0`                                           | Last price protected band         |
+| TradingBandwidth             | int               | `0`                                           | Trading bandwidth                 |
+| IndexOracleId                | string            | `""`                                          | Oracle ID for the market index    |
+| ExpiryTime                   | time.Time         | `time.Unix(0, 0)` (represents epoch time)     | Expiry time of the market         |
+| IsActive                     | bool              | `true`                                        | Whether the market is active      |
+| IsSettled                    | bool              | `false`                                       | Whether the market is settled     |
+| CreatedBlockHeight           | int               | `0`                                           | Block height when market is created |
+| ClosedBlockHeight            | int               | `0`                                           | Block height when market is closed  |
 
 ## Testing
 
@@ -112,12 +162,29 @@ Highlight known limitations of the current design, and potential areas where con
 
 ## Contribute
 
-Guidelines on how developers can contribute to the module:
+We're thrilled that you're considering contributing to our module! Here's what you need to know to get started:
 
-1. Setting up the development environment.
-2. Recommended coding standards.
-3. Pull request and code review process.
+### 1. Setting Up the Development Environment
+
+- **Prerequisites**: Before diving into development, make sure you have [list any tools, software, or dependencies that are needed, e.g., Docker, Node.js, etc.] installed.
+- **Fork and Clone**: Fork this repository and clone it to your local machine. [Link to a detailed setup guide if you have one]
+- **Installation**: Navigate to the root directory and run [specific commands, e.g., `npm install` or `pip install -r requirements.txt`].
+
+### 2. Coding Standards
+
+- **Code Style**: We adhere to [specific coding standards, e.g., PEP8 for Python, or the Airbnb style guide for JavaScript]. Please ensure your contributions respect these standards.
+- **Documentation**: Comment your code where necessary. If you introduce a new feature, update the documentation accordingly.
+- **Testing**: Ensure that your code does not break any existing functionality. Write tests for new features and run existing tests with [specific command, e.g., `npm test`].
+
+### 3. Pull Request and Code Review Process
+
+- **Branching**: Create a new branch for each feature or fix. Naming conventions are crucial; consider a format like `feature/your-feature-name` or `fix/issue-number`.
+- **Commit Messages**: Craft clear, concise commit messages. If there's an associated issue, reference it in the message.
+- **Submit a Pull Request (PR)**: Once you're satisfied with your changes, push the branch and create a PR against our main branch. Ensure that your PR description is detailed, explaining the purpose, changes made, and any other pertinent details.
+- **Review**: One of our maintainers will review your PR. Address any comments or suggestions they might have.
+- **Merge**: After review and any necessary adjustments, a maintainer will merge your PR. Congratulations on your contribution!
 
 ## License
 
-Provide details about the licensing of the module.
+This module is developed and maintained by **Switcheo Labs**. It's licensed under the [name of the license, e.g., "MIT License"]. For detailed information, please refer to the [LICENSE](path-to-LICENSE-file-if-it-exists) file in this repository.
+
