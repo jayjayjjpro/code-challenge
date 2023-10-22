@@ -158,8 +158,114 @@ Guidelines on how to test the Market Module:
 
 ## Areas of Improvement
 
-Highlight known limitations of the current design, and potential areas where contributions would be beneficial.
+#### Shortcoming 1: Input Validation
 
+Only the expiry time argument is validated for correct format. The other arguments (e.g., market type, base, quote, etc.) aren't checked for validity in the CLI command.
+
+For example, for txMarket.go
+```go
+return errorsmod.Wrapf(sdkerrors.ErrInvalidRequest, "invalid expiry time: %s", err)
+
+```
+**Improvements**
+```go
+if len(argsMarketType) == 0 || len(argsBase) == 0 || len(argsQuote) == 0 {
+    return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "market type, base or quote cannot be empty")
+}
+
+```
+#### Shortcoming 2: Flag Setting
+
+No validation for transaction flags.
+
+The flags.AddTxFlagsToCmd(cmd) method adds transaction flags to the command, but there's no check if these flags are correctly provided by the user or if they are valid.
+
+For example, for txMarket.go
+```go
+flags.AddTxFlagsToCmd(cmd)
+
+```
+
+**Improvements**
+
+Provide validation for transaction flags to ensure they are correctly set and give feedback on any missing or invalid flags.
+```go
+// After calling flags.AddTxFlagsToCmd(cmd)
+
+if !cmd.Flags().Changed("from") {
+    return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "the 'from' flag is required")
+}
+
+```
+#### Shortcoming 3: Documentations
+No detailed argument descriptions
+
+There's a short description provided, but detailed documentation about each argument's expected format and values is missing.
+
+**Improvements**
+
+Enhance the documentation to provide more context on each argument. This would assist users in understanding how to use the command correctly.
+
+```go
+cmd := &cobra.Command{
+    // ... other properties
+    Long: `
+This command is used to create a market with the following arguments:
+
+- market-type: The type of market being created.
+- base: The base asset.
+- quote: The quote asset.
+- base-usd-price: Current USD price of the base asset.
+- quote-usd-price: Current USD price of the quote asset.
+- index-oracle-id: The ID of the oracle that provides the index.
+- expiry-time: Expiry time for the market in Unix timestamp format.
+`,
+}
+
+```
+
+#### Shortcoming 4: Error Feedback
+Errors are directly returned without additional contextual information. While this is generally fine for developers, it might not be user-friendly for end users who might benefit from more descriptive error messages.
+
+For example for queryMarket.go
+
+**Improvements**
+
+Wrap errors with descriptive messages to provide better feedback. For example:
+```go
+// Instead of:
+// return err
+
+// Use:
+return fmt.Errorf("failed to query all markets: %w", err)
+
+
+```
+
+#### Shortcoming 5: CLI Command Naming
+The 'CmdShowMarket' command uses market as its name. While this is descriptive, it might be more intuitive to use verbs like get or show for querying commands.
+
+For example for queryMarket.go
+
+```go
+cmd := &cobra.Command{
+    Use:   "market [name]",
+    ...
+}
+
+```
+
+**Improvements**
+
+Consider renaming the command to something like get-market or show-market for clarity.
+
+```go
+cmd := &cobra.Command{
+    Use:   "get-market [name]",
+    ...
+}
+
+```
 ## Contribute
 
 We're thrilled that you're considering contributing to our module! Here's what you need to know to get started:
