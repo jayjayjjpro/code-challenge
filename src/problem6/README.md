@@ -292,5 +292,5 @@ We're thrilled that you're considering contributing to our module! Here's what y
 
 ## License
 
-This module is developed and maintained by **Switcheo Labs**. It's licensed under the [name of the license, e.g., "MIT License"]. For detailed information, please refer to the [LICENSE](path-to-LICENSE-file-if-it-exists) file in this repository.
+This module is developed and maintained by **Switcheo Labs**. For detailed information, please refer to the [LICENSE](path-to-LICENSE-file-if-it-exists) file in this repository.
 
