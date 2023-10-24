@@ -1,8 +1,15 @@
-# React + Vite
+# Problem 2 Fancy Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The repository is deployed on Netlify:
+[Visit My Website](https://idyllic-panda-17c188.netlify.app/)
 
-Currently, two official plugins are available:
+1. Navigate to the Problem2 directory:
+  ```cd code-challenge/src/problem2/Problem2```
+2.  Run the command in your terminal ```npm run dev```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ 
+
+
+
+References:
+https://www.geeksforgeeks.org/how-to-create-a-currency-converter-app-in-reactjs/
