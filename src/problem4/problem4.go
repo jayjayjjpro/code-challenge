@@ -34,9 +34,9 @@ func sum_to_n_c(n int) int {
 
 func main() {
 	n := 5
-	fmt.Println("Using Loop:", sum_to_n_a(n))
-	fmt.Println("Using Arithmetic Progression Formula:", sum_to_n_b(n))
-	fmt.Println("Using Recursion:", sum_to_n_c(n))
+	fmt.Printf("Output: sum_to_n(%d) === %d\n", n, sum_to_n_a(n))
+	fmt.Printf("Output: sum_to_n(%d) === %d\n", n, sum_to_n_b(n))
+	fmt.Printf("Output: sum_to_n(%d) === %d\n", n, sum_to_n_c(n))
 }
 
 // In terms of efficiency, the arithmetic progression formula is the best option
