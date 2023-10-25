@@ -5,7 +5,13 @@ The repository is deployed on Netlify:
 
 1. Navigate to the Problem2 directory:
   ```cd code-challenge/src/problem2/Problem2```
-2.  Run the command in your terminal ```npm run dev```
+2.  Run the commands in your terminal
+```shell
+npm install
+
+npm run dev
+```
+    
 
  
 
