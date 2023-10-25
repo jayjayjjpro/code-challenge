@@ -1,7 +1,7 @@
 # Problem 2 Fancy Form
 
 The repository is deployed on Netlify:
-[Visit My Website](https://idyllic-panda-17c188.netlify.app/)
+[Visit My Website](https://jocular-babka-a71c37.netlify.app/)
 
 1. Navigate to the Problem2 directory:
   ```cd code-challenge/src/problem2/Problem2```
